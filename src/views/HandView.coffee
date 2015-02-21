@@ -12,4 +12,9 @@ class window.HandView extends Backbone.View
     @$el.html @template @collection
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el
-    @$('.score').text @collection.scores()[0]
+    # if !@collection.hasAce() or @$collection.scores()[1] > 21 then @$('.score').text @collection.scores()[0] else @$('.score').text @collection.scores()[1]
+    # If you have an ace AND the score is NOT over 21, we should show the higher score.
+    if @collection.hasAce()
+      if @collection.scores()[1] > 21 then @$('.score').text @collection.scores()[0] else @$('.score').text @collection.scores()[1]
+    else
+      @$('.score').text @collection.scores()[0]

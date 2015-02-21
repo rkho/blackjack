@@ -1,0 +1,22 @@
+{
+  "name": "2015-02-blackjack",
+  "version": "0.0.1",
+  "homepage": "https://github.com/rkho/2015-02-blackjack",
+  "authors": [
+    "Richard Kho <rkho@me.com>"
+  ],
+  "description": "A simple Blackjack web app",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sweetalert": "~0.4.2"
+  }
+}

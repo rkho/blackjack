@@ -7,23 +7,38 @@ class window.App extends Backbone.Model
     @set 'dealerHand', deck.dealDealer()
     # Listener for a 'hit' or 'stand'
       # If either event occurs, trigger the Dealer's logic
+    if @get('playerHand').hasBlackjack()
+      @gameOver('You won with a Blackjack!', 'success')
+    if @get('dealerHand').hasBlackjack()
+      @gameOver('The Dealer has Blackjack!', 'error')
+      @.get('dealerHand').models[0].flip()
     @get('playerHand').on 'hit', =>
       playerScore = @get('playerHand').minScore()
       if playerScore > 21
-        @gameOver('You Busted!')
+        @gameOver('You Busted!', 'error')
     @get('playerHand').on 'stand', =>
       @dealerLogic()
 
-  gameOver: (str) ->
-    alert('Game Over! ' + str)
+  gameOver: (str, result) ->
+    swal("Game Over!", str, result)
+
+  biggestScore: (obj) ->
+    scoresArr = obj.scores()
+    if scoresArr[1] <= 21
+      return scoresArr[1]
+    else
+      return scoresArr[0]
 
   dealerLogic: ->
     @get('dealerHand').models[0].flip();
     @get('dealerHand').hit() while @get('dealerHand').minScore() < 17
-    dealerScore = @get('dealerHand').minScore()
-    playerScore = @get('playerHand').minScore()
+    dealerScore = @biggestScore(@get('dealerHand'))
+    playerScore = @biggestScore(@get('playerHand'))
     @gameOver("It's a tie!") if dealerScore == playerScore
     if dealerScore > 21 || playerScore > dealerScore
-     @gameOver('You beat the Dealer!')
+     @gameOver('You beat the Dealer!', 'success')
     else if dealerScore > playerScore
-     @gameOver('The Dealer beat you!')
+     @gameOver('The Dealer beat you!', 'error')
+
+  newGame: ->
+    console.log('new game')
