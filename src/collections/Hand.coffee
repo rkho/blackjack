@@ -30,9 +30,3 @@ class window.Hand extends Backbone.Collection
   stand: ->
     # Stand is where you tell the dealer you no longer wish to hit, and that it's their turn to start playing.
     @trigger 'stand', @
-
-  split: ->
-    # Split will first check to see if the two cards are pairs. If it is, it will split them into two hands.
-    console.log(@models)
-
-  double: ->

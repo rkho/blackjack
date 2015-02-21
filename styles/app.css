@@ -1,3 +1,8 @@
+body {
+  background-image: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 .card {
   float: left;
   border: solid 1px black;
@@ -7,10 +12,14 @@
   margin-right: 20px;
 }
 
-.covered {
-  background-color: black;
-}
-
 .hand {
   overflow: auto;
+}
+
+.covered{
+  background: url(../img/card-back.png);
+}
+
+button {
+  margin: auto;
 }
