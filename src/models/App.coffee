@@ -13,7 +13,7 @@ class window.App extends Backbone.Model
       @.get('dealerHand').models[0].flip()
     @get('playerHand').on 'hit', =>
       playerScore = @get('playerHand').minScore()
-      if playerScore > 21
+      if @get('playerHand').hasBust()
         @gameOver('You Busted!', 'error')
     @get('playerHand').on 'stand', =>
       @dealerLogic()
@@ -36,11 +36,10 @@ class window.App extends Backbone.Model
       dealerScore = @biggestScore(@get('dealerHand'))
       playerScore = @biggestScore(@get('playerHand'))
       @gameOver("It's a tie!") if dealerScore == playerScore
-      if dealerScore > 21 || playerScore > dealerScore
+      if @get('dealerHand').hasBust() || playerScore > dealerScore
         @gameOver('You beat the Dealer!', 'success')
       else if dealerScore > playerScore
         @gameOver('The Dealer beat you!', 'error')
 
   newGame: ->
     console.log()
-    new AppView(model: new App()).$el.appendTo 'body'

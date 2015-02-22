@@ -21,11 +21,18 @@ class window.Hand extends Backbone.Collection
     else
       false
 
+
   scores: ->
     # The scores are an array of potential scores.
     # Usually, that array contains one element. That is the only score.
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
+
+  hasBust: ->
+    if @minScore() > 21
+      true
+    else
+      false
 
   stand: ->
     # Stand is where you tell the dealer you no longer wish to hit, and that it's their turn to start playing.
