@@ -1,6 +1,6 @@
 class window.AppView extends Backbone.View
   template: _.template '
-    <button class="new-game">New Game</button> <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
+    <button class="new-game">New Game</button> <button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="split-button">Split</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
@@ -9,11 +9,13 @@ class window.AppView extends Backbone.View
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.get('playerHand').stand()
     'click .new-game': -> @model.newGame()
+    'click .split-button': -> @model.get('playerHand').split()
 
   initialize: ->
     @render()
+    that = @
     @model.on 'anotherGame', ->
-      @render()
+      that.render()
 
   render: ->
     @$el.children().detach()

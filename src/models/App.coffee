@@ -3,8 +3,10 @@
 class window.App extends Backbone.Model
   initialize: ->
     @set 'deck', deck = new Deck()
-    @set 'playerHand', deck.dealPlayer()
-    @set 'dealerHand', deck.dealDealer()
+    @newHands(deck)
+
+    # @get('playerHand').on 'split', =>
+    #   console.log('splitting!')
 
     if @get('playerHand').hasBlackjack()
       @gameOver('You won with a Blackjack!', 'success')
@@ -17,6 +19,10 @@ class window.App extends Backbone.Model
         @gameOver('You Busted!', 'error')
     @get('playerHand').on 'stand', =>
       @dealerLogic()
+
+  newHands: (obj)->
+    @set 'playerHand', obj.dealPlayer()
+    @set 'dealerHand', obj.dealDealer()
 
   gameOver: (str, result) ->
     swal(str, "The game has ended", result)
@@ -42,4 +48,8 @@ class window.App extends Backbone.Model
         @gameOver('The Dealer beat you!', 'error')
 
   newGame: ->
-    console.log()
+    if @get('deck').length < 10
+      @set 'deck', deck = new Deck()
+      swal('Time for a new deck!', 'Everyday I\'m shuffling', 'success')
+    @newHands(@get('deck'));
+    @trigger 'anotherGame', @

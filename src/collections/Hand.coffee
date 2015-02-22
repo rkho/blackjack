@@ -21,7 +21,6 @@ class window.Hand extends Backbone.Collection
     else
       false
 
-
   scores: ->
     # The scores are an array of potential scores.
     # Usually, that array contains one element. That is the only score.
@@ -35,5 +34,12 @@ class window.Hand extends Backbone.Collection
       false
 
   stand: ->
-    # Stand is where you tell the dealer you no longer wish to hit, and that it's their turn to start playing.
     @trigger 'stand', @
+
+  hasSplit: ->
+    false
+
+  split: ->
+    # Split will separate the hand into two new hands, each with one new card.
+    if @models[0].attributes.rankName == @models[1].attributes.rankName
+      console.log('splitting')
